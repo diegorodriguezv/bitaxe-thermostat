@@ -2,9 +2,15 @@
 
 # Install bitaxe-thermostat as a systemd service so it runs at boot time.
 
+# Make sure that there are two arguments
+if [ $# != 2 ]; then
+    echo "You must provide two arguments: 'sudo ./install.sh <ip> <target>'" 1>&2
+    exit 1
+fi
+
 # Make sure only root can run this script
 if [ "$(id -u)" != "0" ]; then
-    echo "This script must be run as root: 'sudo ./install.sh'" 1>&2
+    echo "This script must be run as root: 'sudo ./install.sh <ip> <target>'" 1>&2
     exit 1
 fi
 
@@ -25,7 +31,8 @@ Type=simple
 Restart=always
 User=$(logname)
 WorkingDirectory=$(pwd)
-ExecStart='$(pwd)/run.sh'
+ExecStart=$(pwd)/run.sh $1 $2
+StandardOutput=journal+console
 
 [Install]
 WantedBy=default.target

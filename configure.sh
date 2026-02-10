@@ -11,10 +11,10 @@ if [ "$(id -u)" == "0" ]; then
 fi
 
 # Create virtual environment
-python3 -m venv virtualenv
+python3 -m venv venv
 
 # Activate virtual environment
-. virtualenv/bin/activate
+. venv/bin/activate
 
 # Install requests module
 pip3 install requests

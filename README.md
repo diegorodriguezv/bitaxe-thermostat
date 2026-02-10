@@ -16,17 +16,24 @@ alternatives and this is the solution.
 
 ## Installation
 
-This repository includes a bash script to automatically run the script at boot time on 
-Linux with systemd. 
+This repository includes a bash script to automatically install dependencies and run 
+the script at boot time on Linux with systemd. 
 
 ```
-sudo ./install.sh
+sudo ./install.sh <ip> <target temperature>
 ```
 
 You can check if it is running correctly using systemctl:
 
 ```
 systemctl status bitaxe-thermostat.service
+```
+
+If you want to uninstall it just run the uninstall script, which will stop the service
+and remove the unit file.
+
+```
+sudo ./uninstall.sh
 ```
 
 ## Usage

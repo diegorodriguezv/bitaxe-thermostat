@@ -7,5 +7,6 @@ if [ "$(id -u)" == "0" ]; then
    echo "This script must NOT be run as root" 1>&2
    exit 1
 fi
-. ./virtualenv/bin/activate
-python3 bitaxe-thermostat.py
+
+. ./venv/bin/activate
+python3 -u bitaxe-thermostat.py $@
