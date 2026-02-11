@@ -9,4 +9,6 @@ if [ "$(id -u)" == "0" ]; then
 fi
 
 . ./venv/bin/activate
-python3 -u bitaxe-thermostat.py $@
+
+# Replace the shell with the python process so the service can stop it correctly
+exec python3 -u bitaxe-thermostat.py $@

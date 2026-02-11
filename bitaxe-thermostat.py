@@ -8,6 +8,7 @@ import requests
 import time
 import argparse
 from collections import deque
+import signal
 
 
 def get_system_info(bitaxe_ip):
@@ -74,6 +75,13 @@ def autotune(ip, target):
         return
     freq = info["frequency"]
     print(f"first frequency {freq}")
+
+    def handle_signal(signum, frame):
+        print(f"terminated with signal {signum}")
+        restore(ip, freq)
+        exit()
+
+    signal.signal(signal.SIGTERM, handle_signal)
     try:
         loop(ip, target, freq)
     except KeyboardInterrupt:
@@ -85,7 +93,14 @@ def autotune(ip, target):
         restore(ip, freq)
 
 
+is_running = True
+
+
 def restore(ip, freq):
+    global is_running
+    if not is_running:
+        return
+    is_running = False
     print("restoring original settings")
     tries = 0
     succeeded = False

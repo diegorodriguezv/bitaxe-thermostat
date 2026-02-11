@@ -32,11 +32,14 @@ Restart=always
 User=$(logname)
 WorkingDirectory=$(pwd)
 ExecStart=$(pwd)/run.sh $1 $2
-StandardOutput=journal+console
 
 [Install]
 WantedBy=default.target
 _contents
+
+# Stop in case it is running
+systemctl daemon-reload
+systemctl stop bitaxe-thermostat.service
 
 # Enable and start the service
 systemctl daemon-reload
