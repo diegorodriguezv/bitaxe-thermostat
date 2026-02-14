@@ -52,11 +52,11 @@ def loop(ip, target, freq):
             num_infos = 0
             avg = sum(temps) / len(temps)
             changed = False
-            if target - avg > 0.5:
-                freq += 5 if freq < 650 else 0
+            if target - avg > 0.5 and freq < 650:
+                freq += 5
                 changed = True
-            elif target - avg < -0.5:
-                freq -= 5 if freq > 525 else 0
+            elif target - avg < -0.5 and freq > 525:
+                freq -= 5
                 changed = True
             if errors:
                 print(f"unable to fetch system info x{errors}")
