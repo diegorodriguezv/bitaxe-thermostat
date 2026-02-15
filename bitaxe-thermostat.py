@@ -67,10 +67,18 @@ def loop(ip, target, freq):
             num_infos = 0
             avg = sum(temps) / len(temps)
             changed = False
-            if target - avg > temp_tolerance and freq < max_frequency:
+            if (
+                freq < min_frequency
+                or target - avg > temp_tolerance
+                and freq < max_frequency
+            ):
                 freq += frequency_step
                 changed = True
-            elif target - avg < -temp_tolerance and freq > min_frequency:
+            elif (
+                freq > max_frequency
+                or target - avg < -temp_tolerance
+                and freq > min_frequency
+            ):
                 freq -= frequency_step
                 changed = True
             if errors:
@@ -86,7 +94,7 @@ def loop(ip, target, freq):
 def get_default_config():
     return {
         "frequency_step": 5,
-        "max_frequency": 660,
+        "max_frequency": 650,
         "min_frequency": 525,
         "monitor_interval": 15,
         "refresh_interval": 1,
